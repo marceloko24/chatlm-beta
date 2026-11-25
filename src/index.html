@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0c0d11" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="ChatLM Beta" />
+    <meta name="description" content="ChatLM Beta: versión de prueba con Qwen3-0.6B. Las conversaciones no salen del dispositivo. No es la app estable." />
+    <title>ChatLM Beta</title>
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="icon" href="./icons/icon-192.png" type="image/png" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="brand">
+        <img class="logo" src="./icons/icon-192.png" alt="" width="36" height="36" />
+        <div>
+          <h1>ChatLM Beta</h1>
+          <p class="tag" id="backend">Preparando el motor…</p>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel" id="setup">
+        <h2>Tu modelo</h2>
+        <p class="lead" id="model-label">Importá Qwen3-0.6B Q4_K_M (Unsloth) desde tu iPhone. Queda guardado acá, en una carpeta distinta a la de la app estable, y no se sube a ningún servidor.</p>
+        <div class="row">
+          <label class="btn primary file-btn">
+            Elegí un archivo GGUF
+            <input id="file" type="file" />
+          </label>
+          <button type="button" class="btn" id="load-saved" hidden>Cargar el modelo guardado</button>
+        </div>
+        <div class="progress-wrap" id="progress-wrap" hidden>
+          <div class="progress" id="progress-bar"></div>
+        </div>
+        <p class="status" id="status" role="status">Iniciando…</p>
+      </section>
+
+      <section class="chat" id="chat" hidden>
+        <div id="transcript" class="transcript" aria-live="polite"></div>
+        <form class="composer" id="composer">
+          <label class="sr-only" for="prompt">Mensaje</label>
+          <textarea id="prompt" rows="2" placeholder="Escribí un mensaje…" enterkeyhint="send"></textarea>
+          <div class="composer-actions">
+            <button type="button" class="btn" id="reset">Nueva charla</button>
+            <button type="button" class="btn danger" id="stop" hidden>Parar</button>
+            <button type="submit" class="btn primary" id="send" disabled>Enviar</button>
+          </div>
+        </form>
+        <p class="speed" id="speed"></p>
+      </section>
+
+      <section class="help">
+        <h2>Esta es la versión de prueba</h2>
+        <p>No reemplaza a la ChatLM estable. El modelo de esta beta se guarda en otra carpeta y no pisa el Qwen2.5-0.5B de la app estable.</p>
+        <h2>Bajar el modelo e importarlo</h2>
+        <ol>
+          <li>Con wifi, descargá <a href="https://huggingface.co/unsloth/Qwen3-0.6B-GGUF/resolve/main/Qwen3-0.6B-Q4_K_M.gguf">Qwen3-0.6B-Q4_K_M.gguf</a> (378,3 MB, Unsloth, Apache 2.0).</li>
+          <li>En esta página, tocá <strong>Elegí un archivo GGUF</strong> y seleccioná ese archivo desde Archivos.</li>
+        </ol>
+        <h2>Agregar a la pantalla de inicio</h2>
+        <ol>
+          <li>Abrí esta página en Safari (no en una pestaña privada).</li>
+          <li>Tocá <strong>Compartir</strong>.</li>
+          <li>Elegí <strong>Agregar a inicio</strong> y confirmá. Tiene que aparecer como <strong>ChatLM Beta</strong>.</li>
+        </ol>
+        <p>Al tenerla en Inicio, Safari no borra el modelo a los 7 días. ChatLM Beta no envía tus mensajes ni el modelo a ningún servidor; el sitio solo entrega los archivos de la app.</p>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
