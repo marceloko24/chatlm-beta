@@ -1,0 +1,69 @@
+name: pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      TINYGO_VERSION: "0.44.0"
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-go@v6
+        with:
+          go-version: "1.27.x"
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install TinyGo
+        run: |
+          set -e
+          curl -sSL -o tinygo.deb https://github.com/tinygo-org/tinygo/releases/download/v${TINYGO_VERSION}/tinygo_${TINYGO_VERSION}_amd64.deb
+          sudo dpkg -i tinygo.deb
+          tinygo version
+
+      - name: Icons
+        run: |
+          pip install pillow
+          python scripts/generate_icons.py
+
+      - name: llama.cpp wasm (single thread) and memory cap
+        run: |
+          set -e
+          go install github.com/hybridgroup/yzma@v1.33.0
+          mkdir -p src/wasm
+          "$(go env GOPATH)/bin/yzma" install -lib src/wasm -os wasm -version v1.0.0
+          python scripts/patch_wasm_memory.py src/wasm/yzma_wasm.wasm
+          rm -f src/wasm/yzma_wasm_mt.* src/wasm/yzma_wasm_webgpu.*
+
+      - name: Build ChatLM
+        run: make dist
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

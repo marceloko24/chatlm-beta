@@ -1,0 +1,13 @@
+node_modules/
+dist/
+src/wasm/yzma.wasm
+src/wasm/yzma_wasm.wasm
+src/wasm/yzma_wasm.js
+src/wasm/yzma_wasm_mt.*
+src/wasm/yzma_wasm_webgpu.*
+src/wasm/yzma-install.json
+src/wasm/yzma-manifest.json
+src/icons/*.png
+docs/e2e-results/
+docs/e2e-screenshots/
+.DS_Store
