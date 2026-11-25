@@ -1,0 +1,12 @@
+module github.com/marceloko24/chatlm
+
+go 1.26.0
+
+require github.com/hybridgroup/yzma v1.33.0
+
+require (
+	github.com/ardanlabs/jinja v1.1.0 // indirect
+	github.com/ebitengine/purego v0.10.0 // indirect
+	github.com/jupiterrider/ffi v0.8.0 // indirect
+	golang.org/x/sys v0.42.0 // indirect
+)

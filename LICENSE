@@ -1,0 +1,9 @@
+ChatLM is licensed under the Apache License, Version 2.0, the same as yzma.
+
+It includes:
+- yzma and its llama.cpp WebAssembly builds (Apache 2.0): https://github.com/hybridgroup/yzma
+- wasm_exec.js from TinyGo / the Go project (BSD-3-Clause)
+
+You may obtain a copy of the Apache License at:
+
+    http://www.apache.org/licenses/LICENSE-2.0
